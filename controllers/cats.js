@@ -21,6 +21,28 @@ router.post('/', async (req,res) => {
     }
 })
 
+// DELETE
+router.delete('/:id', async (req,res) => {
+    try {
+        res.status(200).json(await Cats.findByIdAndDelete(req.params.id))
+    } catch (error) {
+        res.status(400).json({message: 'Failed to delete'})
+    }
+})
+
+// UPDATE
+router.put('/:id', async (req,res) => {
+    try {
+        res.status(200).json(await Cats.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true}
+            ));
+    } catch (error) {
+        res.status(400).json({message: "Couldn't update"});
+    }
+});
+
 // CREATE
 
 /// EXPORT
