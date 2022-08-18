@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const catRouter = require('./controllers/cats')
 
 /////
 require('dotenv').config();
@@ -17,6 +18,8 @@ mongoose.connection.on('error', (error) => {console.log(`Error Occured: ${error}
 
 // Middleware
 app.use(cors());
+app.use(express.json());
+app.use('/api/cats', catRouter)
 
 
 
@@ -36,7 +39,9 @@ app.get('/', (req,res)=>{
 
 
 
-
+app.get('/*', (req,res) => {
+    res.status(404).json({Message: 'ERROR'})
+})
 
 ///////Listener///////
 app.listen(PORT || 4000, () => {
